@@ -1,0 +1,2 @@
+line-bot-sdk==3.10.1
+gunicorn==21.2.0
