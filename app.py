@@ -23,6 +23,8 @@ from linebot.v3.webhooks import (
     TextMessageContent
 )
 
+from openai import OpenAI
+
 app = Flask(__name__)
 
 configuration = Configuration(access_token=ACCESS_TOKEN)
@@ -50,12 +52,24 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessageContent)
 def handle_message(event):
+    
+    client = OpenAI()
+    completion = client.chat.completions.create(
+      model="gpt-3.5-turbo",
+      messages=[
+        {"role": "system", "content": "You are a poetic assistant, skilled in explaining complex programming concepts with creative flair."},
+        {"role": "user", "content": "Compose a poem that explains the concept of recursion in programming."}
+      ]
+    )
+    msg = completion.choices[0].message.content
+
     with ApiClient(configuration) as api_client:
         line_bot_api = MessagingApi(api_client)
         line_bot_api.reply_message_with_http_info(
             ReplyMessageRequest(
                 reply_token=event.reply_token,
-                messages=[TextMessage(text=event.message.text)]
+                # messages=[TextMessage(text=event.message.text)]
+                messages=[TextMessage(text=msg)]
             )
         )
 
