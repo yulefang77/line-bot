@@ -23,6 +23,8 @@ from linebot.v3.webhooks import (
     TextMessageContent
 )
 
+import json
+
 from openai import OpenAI
 
 app = Flask(__name__)
@@ -39,6 +41,9 @@ def callback():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
+
+    json_data = json.loads(body)
+    print(json_data["destination"]) 
 
     # handle webhook body
     try:
