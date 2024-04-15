@@ -42,8 +42,9 @@ def callback():
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
-    json_data = json.loads(body)
+    json_data = json.loads(body)    
     print(json_data["destination"]) 
+    print(json_data["events"][0]["message"]["text"])
 
     # handle webhook body
     try:
