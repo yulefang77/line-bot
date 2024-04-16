@@ -34,7 +34,7 @@ load_dotenv()
 ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN')
 CHANNEL_SECRET = os.environ.get('CHANNEL_SECRET')
 OPPA = os.environ.get('OPPA')
-print(OPPA)
+
 app = Flask(__name__)
 
 configuration = Configuration(access_token=ACCESS_TOKEN)
@@ -69,7 +69,7 @@ def handle_message(event, dest):
             {"role": "system", "content": ("你現在扮演一位生活助手。尊稱使用者為\"我的女王\"，態度阿諛奉承。"
                                             "回答盡量在150字以內。中文回答只能使用正體中文與台灣地區用語，"
                                             "不可使用簡體字。如果使用者心情不好或身體不舒服，安慰使用者，並說"
-                                            "\"別難過，我和哥說，請他帶您吃些好東西\"。")},
+                                            "\"別難過，我和" + OPPA + "哥說，請他帶您吃些好東西\"。")},
             {"role": "user", "content": user_text}
         ]
     )
