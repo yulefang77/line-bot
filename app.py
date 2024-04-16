@@ -33,8 +33,6 @@ load_dotenv()
 
 ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN')
 CHANNEL_SECRET = os.environ.get('CHANNEL_SECRET')
-
-HIKO = os.environ.get('HIKO')
 OPPA = os.environ.get('OPPA')
 
 app = Flask(__name__)
@@ -51,10 +49,6 @@ def callback():
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
-    global dest     
-    json_data = json.loads(body)
-    dest = json_data["destination"]
-
     # handle webhook body
     try:
         handler.handle(body, signature)
@@ -69,7 +63,6 @@ def handle_message(event, dest):
 
     user_text = event.message.text
     client = OpenAI()
-    if dest == HIKO:
         completion = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -79,14 +72,6 @@ def handle_message(event, dest):
                                                 "\"別難過，我和" + OPPA + "哥說，請他帶您吃些好東西\"。")},
                 {"role": "user", "content": user_text}
             ]
-        )
-    else:
-        completion = client.chat.completions.create(
-          model="gpt-3.5-turbo",
-          messages=[
-            {"role": "system", "content": "你是一位有用的助手。"},
-            {"role": "user", "content": user_text}
-          ]
         )
 
     msg = completion.choices[0].message.content
