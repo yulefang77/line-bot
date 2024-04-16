@@ -69,7 +69,7 @@ def handle_message(event, dest):
 
     user_text = event.message.text
     client = OpenAI()
-    if dest == VINAY:
+    if dest == HIKO:
         completion = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
