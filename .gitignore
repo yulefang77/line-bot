@@ -1,2 +1,2 @@
-# ignore .env file
-.env
+# ignore app_pep8.py file
+app_pep8.py
