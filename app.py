@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 from flask import Flask, request, abort
 from linebot.v3 import WebhookHandler
 from linebot.v3.exceptions import InvalidSignatureError
@@ -11,9 +10,6 @@ from linebot.v3.webhooks import (
     MessageEvent, TextMessageContent
 )
 from openai import OpenAI
-
-# 加載 .env 文件中的環境變數
-load_dotenv()
 
 ACCESS_TOKEN = os.environ.get('ACCESS_TOKEN')
 CHANNEL_SECRET = os.environ.get('CHANNEL_SECRET')

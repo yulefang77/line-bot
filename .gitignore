@@ -1,6 +1,4 @@
 # ignore .env file
 .env
-Procfile
-requirements.txt
 # ignore __pycache__
 __pycache__
