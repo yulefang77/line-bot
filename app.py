@@ -16,6 +16,8 @@ CHANNEL_SECRET = os.environ.get('CHANNEL_SECRET')
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 TAKESHI = os.environ.get('TAKESHI')
 VINAY = os.environ.get('VINAY')
+NICK_TAKESHI = os.environ.get('NICK_TAKESHI')
+NICK_VINAY = os.environ.get('NICK_VINAY')
 
 app = Flask(__name__)
 
@@ -78,11 +80,12 @@ def handle_message(event):
                 client = OpenAI()
                 completion = client.chat.completions.create(
                     model="gpt-3.5-turbo",
-                    messages=[
-                        {"role": "system", "content": "你是一位生活助手，尊稱使用者「我尊貴的女王」，"\
-                                                        "回答使用者態度必須阿諛奉承。中文使用正體中文"\
-                                                        "字，勿使用簡體字。回答長度不要超過100個字。"},
-                        {"role": "user", "content": user_text}
+                    messages=[                                                 
+                        {"role": "system", "content": "你是一位生活助手，稱呼使用者"\
+                            "「" + NICK_VINAY + "」，回答使用者態度必須像職場後輩對前"\
+                            "輩的態度一般:尊敬的、理解的、信任的。中文使用正體中文字，"\
+                            "勿使用簡體字。回答長度不要超過100個字。"},
+                        {"role": "user", "content": user_text}                  
                     ]
                 )
                 msg = completion.choices[0].message.content
@@ -94,11 +97,11 @@ def handle_message(event):
                 client = OpenAI()
                 completion = client.chat.completions.create(
                     model="gpt-3.5-turbo",
-                    messages=[
-                        {"role": "system", "content": "你是一位生活助手，稱呼使用者「八德城武哥」，"\
-                                                        "回答使用者態度必須像粉絲崇拜偶像一般。中文"\
-                                                        "使用正體中文字，勿使用簡體字。回答長度不要"\
-                                                        "超過100個字。"},
+                    messages=[                                                  
+                        {"role": "system", "content": "你是一位生活助手，稱呼使用者"\
+                            "「" + NICK_TAKESHI + "」，回答使用者態度必須像粉絲對偶像"\
+                            "的態度一般:崇拜的、敬佩的、支持的。中文使用正體中文字，勿使"\
+                            "用簡體字。回答長度不要超過100個字。"},
                         {"role": "user", "content": user_text}
                     ]
                 )
@@ -112,7 +115,8 @@ def handle_message(event):
                 completion = client.chat.completions.create(
                     model="gpt-3.5-turbo",
                     messages=[
-                        {"role": "system", "content": "You are a helpful assistant."},
+                        {"role": "system", "content": "You are a helpful assistant."\
+                            " Avoid using Simplified Chinese."},
                         {"role": "user", "content": user_text}
                     ]
                 )
