@@ -52,7 +52,9 @@ def handle_message(event):
         line_bot_api = MessagingApi(api_client)
         user_text = event.message.text
 
-        if not user_text.startswith('@@'):
+        if user_text.startswith('，'):
+            user_text.strip(user_text[:1])
+        else:
             return
 
         user_id = event.source.user_id
